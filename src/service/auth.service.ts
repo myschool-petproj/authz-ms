@@ -1,14 +1,18 @@
 import {BadRequestException, Injectable, UnauthorizedException} from "@nestjs/common";
 import {UsersService} from "./users.service";
 import {UsersModel} from "../models/users.model";
+import {JwtService} from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService {
 
-    constructor(private usersService: UsersService) {
+    constructor(
+        private usersService: UsersService,
+        private jwtService: JwtService
+    ) {
     }
 
-    signIn(payload: UsersModel) {
+    signIn(payload: UsersModel): { access_token: string } {
         const user = this.usersService.findByName(payload.user_name);
         if (!user) {
             throw new BadRequestException("User doesn't exist");
@@ -17,10 +21,14 @@ export class AuthService {
             throw new UnauthorizedException();
         }
 
-        // use bcrypt to hash password
-        const {password, ...result} = user;
-        // TODO: generate JWT here and return instead of actual user
-        return result;
+        const response_payload = {
+            sub: user.id,
+            username: user.user_name
+        }
+
+        return {
+            access_token: this.jwtService.sign(response_payload)
+        }
     }
 
 }
