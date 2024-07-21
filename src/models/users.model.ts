@@ -1,8 +1,9 @@
 import {IsNotEmpty, IsString} from "class-validator";
 
+//investigate RBAC
 export class UsersModel {
 
-    id: number;
+    id: string;
 
     @IsString()
     @IsNotEmpty()

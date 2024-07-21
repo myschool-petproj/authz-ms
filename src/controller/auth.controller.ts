@@ -9,9 +9,15 @@ export class AuthController {
     }
 
     @HttpCode(HttpStatus.OK)
-    @Post("login")
-    signIn(@Body() payload: UsersModel) {
-        return this.authService.signIn(payload);
+    @Post("token")
+    async token(@Body() payload: UsersModel) {
+        return this.authService.token(payload);
+    }
+
+    @HttpCode(HttpStatus.CREATED)
+    @Post("signUp")
+    async signUp(@Body() payload: UsersModel) {
+        return this.authService.signUp(payload);
     }
 
 }
