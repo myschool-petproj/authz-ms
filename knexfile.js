@@ -5,7 +5,7 @@ require('dotenv').config();
  */
 module.exports = {
 
-    development: {
+    dev: {
         client: 'better-sqlite3',
         connection: {
             filename: './dev.sqlite3'
@@ -13,6 +13,9 @@ module.exports = {
         useNullAsDefault: true,
         migrations: {
             directory: './db/migrations'
+        },
+        seeds: {
+            directory: './db/seeds'
         }
     }
 

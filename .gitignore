@@ -3,6 +3,7 @@
 
 #config files
 .env
+*.sqlite3
 
 #npm files
 node_modules
